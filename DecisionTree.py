@@ -1,18 +1,11 @@
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from matplotlib.colors import ListedColormap
 from matplotlib import pyplot as plt
-import matplotlib
 import pandas as pd
 from sklearn import tree
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.tree import export_graphviz
-from sklearn.impute import SimpleImputer
 import graphviz
 import seaborn as sns
-from Preprocessing import preprocessDecisionTree
+
 
 
 # ## Building a decision tree

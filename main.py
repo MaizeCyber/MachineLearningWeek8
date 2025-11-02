@@ -2,7 +2,7 @@ from DecisionTree import DecisionTree
 from Preprocessing import preprocessDecisionTree
 
 
-def main():
+def maketree():
     X_train, X_test, y_train, y_test, class_names = preprocessDecisionTree('Obfuscated-MalMem2022.csv', "Class",
                                                                            "Category")
     d = DecisionTree(tree_depth=3, impurity_metric="gini", X_train=X_train, X_test=X_test, y_train=y_train,
@@ -11,5 +11,6 @@ def main():
     d.show_accuracy()
 
 
+
 if __name__ == "__main__":
-    main()
+    maketree()
