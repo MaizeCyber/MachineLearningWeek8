@@ -5,6 +5,7 @@ from Preprocessing import preprocessScale
 from AdaBoost import AdaBoostModel
 from RandomForest import RandomForest
 from svm import svm_classify
+from ComplementNB import ComplementNaiveBayes
 
 file = "data/Firewall_Rule_Classification.csv"
 classColumn = "Class"
@@ -41,16 +42,23 @@ def make_ada():
 
 def make_forest():
     X_train, X_test, y_train, y_test, class_names = preprocessDecisionTree(file=file, classColumn=classColumn)
-    f = RandomForest(n_jobs=2 ,n_estimators=300, learning_rate=1.0, impurity_metric="gini", X_train=X_train, X_test=X_test, y_train=y_train,
-                     y_test=y_test, class_names=class_names)
+    f = RandomForest(n_jobs=2 ,n_estimators=300, learning_rate=1.0, impurity_metric="gini",
+                     X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, class_names=class_names)
     f.build_model()
     f.show_metrics()
 
+def make_naivebayes():
+    X_train, X_test, y_train, y_test, class_names = preprocessDecisionTree(file=file, classColumn=classColumn)
+    nb = ComplementNaiveBayes(alpha = 1.0, force_alpha = True, fit_prior = True, class_prior = None, norm = False,
+                              X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, class_names=class_names)
+    nb.build_model()
+    nb.show_metrics()
 
 if __name__ == "__main__":
     #makelog()
     #make_svm()
     #maketree()
-    make_ada()
-    make_forest()
+    #make_ada()
+    #make_forest()
+    make_naivebayes()
 
