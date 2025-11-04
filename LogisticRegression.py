@@ -8,17 +8,18 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 
 class LogRegression():
 
-    def __init__(self, tree_depth, impurity_metric, X_train, X_test, y_train, y_test, class_names):
-        self.tree_depth = tree_depth
-        self.impurity_metric = impurity_metric
+    def __init__(self, C:int, X_train, X_test, y_train, y_test, class_names, feature_names, max_iter= 1000):
         self.X_train = X_train
         self.X_test = X_test
         self.y_train = y_train
         self.y_test = y_test
         self.class_names = class_names
+        self.C = C
+        self.feature_names = feature_names
+        self.max_iter = max_iter
 
     def trainLR(self):
-        self.lr = LogisticRegression(C=100.0, random_state=1, solver='lbfgs')
+        self.lr = LogisticRegression(C=self.C, random_state=1, solver='lbfgs', max_iter = self.max_iter)
         self.lr.fit(self.X_train, self.y_train)
 
     def predict_and_test(self):
@@ -45,7 +46,7 @@ class LogRegression():
 
         weights = self.lr.coef_[0]
 
-        feature_names = self.X_test.columns
+        feature_names = self.feature_names
 
         # Create a pandas Series to view feature weights
         feature_weights = pd.Series(weights, index = feature_names)
@@ -58,8 +59,6 @@ class LogRegression():
         # Precision: Of all positive predictions, how many were actually positive?
         # Recall: Of all actual positives, how many did the model find?
         # F1-score: The harmonic mean of precision and recall.
-        print("\nClassification Report:")
-        print(classification_report(self.y_test, y_pred, target_names=['Not Probe', 'Probe']))
 
         # Confusion Matrix: A table showing correct vs. incorrect predictions
         # [[True Negative,  False Positive],
@@ -68,23 +67,10 @@ class LogRegression():
         print(confusion_matrix(self.y_test, y_pred))
 
 
-        # Train a model with L1 regularization
-        lr_l1 = LogisticRegression(penalty='l1', C=1.0, solver='saga', random_state=1)
-        lr_l1.fit(self.X_train, self.y_train)
-        print(f"L1 Test Accuracy: {lr_l1.score(self.X_test, self.y_test):.4f}")
-
 
         # Train a model with L2 regularization
-        lr_l2 = LogisticRegression(penalty='l2', C=1.0, solver='lbfgs', random_state=1)
+        lr_l2 = LogisticRegression(penalty='l2', C=1.0, solver='lbfgs', random_state=1, max_iter=self.max_iter)
         lr_l2.fit(self.X_train, self.y_train)
         print(f"L2 Test Accuracy: {lr_l2.score(self.X_test, self.y_test):.4f}")
 
-        # Plotting the feature weights
-        plt.figure(figsize=(12, 6))
-        plt.bar(feature_names, lr_l1.coef_[0], alpha=0.7, label='L1 (Saga)')
-        plt.bar(feature_names, lr_l2.coef_[0], alpha=0.7, label='L2 (LBFGS)')
-        plt.title('Feature Weights for L1 vs L2 Regularization')
-        plt.xticks(rotation=90)
-        plt.legend()
-        plt.show()
 

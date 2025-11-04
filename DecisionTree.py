@@ -66,6 +66,7 @@ class DecisionTree():
         if self.tree_depth > 1:
             disp.plot(cmap=plt.cm.Blues)
             plt.title(f"Confusion Matrix for Depth {self.tree_depth} and Criterion {self.impurity_metric}")
+            plt.savefig('DecisionTreeConfusionMatrix.png', bbox_inches='tight')
             plt.show()
 
             # 2. Get and plot feature importance
@@ -85,6 +86,7 @@ class DecisionTree():
             plt.xlabel('Importance')
             plt.ylabel('Feature')
             plt.tight_layout()
+            plt.savefig('DecisionTreeFeatures.png', bbox_inches='tight')
             plt.show()
 
             # Assume 'tree_model', 'X', and 'class_names' are from your previous code
