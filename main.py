@@ -51,6 +51,6 @@ if __name__ == "__main__":
     #makelog()
     #make_svm()
     #maketree()
-    #make_ada()
+    make_ada()
     make_forest()
 
