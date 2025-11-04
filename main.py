@@ -3,9 +3,10 @@ from LogisticRegression import LogRegression
 from Preprocessing import preprocessDecisionTree
 from Preprocessing import preprocessScale
 from AdaBoost import AdaBoostModel
+from RandomForest import RandomForest
 from svm import svm_classify
 
-file = "Firewall_Rule_Classification.csv"
+file = "data/Firewall_Rule_Classification.csv"
 classColumn = "Class"
 
 def maketree():
@@ -38,9 +39,18 @@ def make_ada():
     d.build_model()
     d.show_metrics()
 
+def make_forest():
+    X_train, X_test, y_train, y_test, class_names = preprocessDecisionTree(file=file, classColumn=classColumn)
+    f = RandomForest(n_jobs=2 ,n_estimators=300, learning_rate=1.0, impurity_metric="gini", X_train=X_train, X_test=X_test, y_train=y_train,
+                     y_test=y_test, class_names=class_names)
+    f.build_model()
+    f.show_metrics()
+
+
 if __name__ == "__main__":
     #makelog()
     #make_svm()
     #maketree()
-    make_ada()
+    #make_ada()
+    make_forest()
 

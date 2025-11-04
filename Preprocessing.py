@@ -2,19 +2,18 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import LabelEncoder
+
 import pandas as pd
 
 
 def preprocessDecisionTree(file, classColumn, *cols_to_exclude):
     df = pd.read_csv(file)
+    le = LabelEncoder()
 
-    #df.replace([np.inf, -np.inf], np.nan, inplace=True)
-
-
-    # Now, factorize the cleaned and filtered column
-    df[classColumn], class_names = pd.factorize(df[classColumn])
-
-    y = df[classColumn]
+    # Encode the classes
+    y = le.fit_transform(df[classColumn])
+    class_names = le.classes_
     print('Class labels:', class_names)
 
     # Identify categorical columns that need to be converted to numbers
@@ -31,7 +30,7 @@ def preprocessDecisionTree(file, classColumn, *cols_to_exclude):
     print("\nFirst 5 rows of X:")
     print(X.head())
     print("\nFirst 5 values of y:")
-    print(y.head())
+    print(y[:5])
 
     # Now X and y are ready to be used in a scikit-learn model
     # For example, splitting the data into training and testing sets:

@@ -102,7 +102,7 @@ class AdaBoostModel():
         # 5. Plot Confusion Matrix
         disp.plot(cmap=plt.cm.Blues)
         plt.title(f"AdaBoost Confusion Matrix (Depth {self.base_tree_depth}, {self.n_estimators} Estimators)")
-        plt.savefig('AdaBoostConfusionMatrix.png', bbox_inches='tight')
+        plt.savefig('results/AdaBoostConfusionMatrix.png', bbox_inches='tight')
         plt.show()
 
         # 6. Get and plot feature importance
@@ -123,7 +123,7 @@ class AdaBoostModel():
         plt.xlabel('Importance')
         plt.ylabel('Feature')
         plt.tight_layout()
-        plt.savefig('AdaBoostFeatures.png', bbox_inches='tight')
+        plt.savefig('results/AdaBoostFeatures.png', bbox_inches='tight')
         plt.show()
 
         # NOTE: The Graphviz visualization of a single tree is removed,
