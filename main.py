@@ -12,7 +12,7 @@ classColumn = "Class"
 
 def maketree():
     X_train, X_test, y_train, y_test, class_names = preprocessDecisionTree(file=file, classColumn=classColumn)
-    d = DecisionTree(tree_depth=4, impurity_metric="gini", X_train=X_train, X_test=X_test, y_train=y_train,
+    d = DecisionTree(tree_depth=5, impurity_metric="gini", X_train=X_train, X_test=X_test, y_train=y_train,
                      y_test=y_test, class_names=class_names)
     d.build_tree()
     d.show_accuracy()
@@ -35,14 +35,14 @@ def make_svm():
 
 def make_ada():
     X_train, X_test, y_train, y_test, class_names = preprocessDecisionTree(file=file, classColumn=classColumn)
-    d = AdaBoostModel(n_estimators=300, learning_rate=1.0 ,base_tree_depth=4, impurity_metric="gini", X_train=X_train, X_test=X_test, y_train=y_train,
+    d = AdaBoostModel(n_estimators=100, learning_rate=1.0 ,base_tree_depth=4, impurity_metric="gini", X_train=X_train, X_test=X_test, y_train=y_train,
                      y_test=y_test, class_names=class_names)
     d.build_model()
     d.show_metrics()
 
 def make_forest():
     X_train, X_test, y_train, y_test, class_names = preprocessDecisionTree(file=file, classColumn=classColumn)
-    f = RandomForest(n_jobs=2 ,n_estimators=300, learning_rate=1.0, impurity_metric="gini",
+    f = RandomForest(n_jobs=2 ,n_estimators=100, learning_rate=1.0, impurity_metric="gini",
                      X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, class_names=class_names)
     f.build_model()
     f.show_metrics()
@@ -57,8 +57,8 @@ def make_naivebayes():
 if __name__ == "__main__":
     #makelog()
     #make_svm()
-    #maketree()
+    maketree()
     #make_ada()
-    #make_forest()
+    make_forest()
     make_naivebayes()
 
